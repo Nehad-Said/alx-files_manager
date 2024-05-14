@@ -7,10 +7,9 @@ import envLoader from './env_loader';
  * Symbolize a MongoDb client.
  */
 class DBClient {
-  /**
-     * Construct a new DBClient instance.
-     */
-
+/**
+  * Construct a new DBClient instance.
+*/
   constructor() {
     envLoader();
     const host = process.env.DB_HOST || 'localhost';
@@ -22,29 +21,46 @@ class DBClient {
     this.client.connect();
   }
 
-  /**
+/**
+ * Check if client's connection to MongoDB server is active
+ * @returns {boolean}
+ */
+isAlive() {
+  return this.client.isConnected();
+}
+
+/**
  * Read the number of users in the database.
  * @returns {Promise<Number>}
  */
-  async nbFiles() {
-    return this.client.db().collection('files').countDocuments();
-  }
+async nbUsers() {
+  return this.client.db().collection('users').countDocuments();
+}
 
-  /**
+/**
+ * 
+ * Read the number of files in the database
+ * @returns {Promise<Number>}
+ */
+async nbFiles() {
+  return this.client.db().collection('files').countDocuments();
+}
+
+/**
  * Read a reference to the `users` collection.
  * @returns {Promise<Collection>}
  */
-  async usersCollection() {
-    return this.client.db().collection('users');
-  }
-  /**
+async usersCollection() {
+  return this.client.db().collection('users');
+}
+
+/**
  * Read a reference to the `files` collection.
  * @returns {Promise<Collection>}
  */
-
-  async filesCollection() {
-    return this.client.db().collection('files');
-  }
+async filesCollection() {
+  return this.client.db().collection('files');
+ }
 }
 
 export const dbClient = new DBClient();
