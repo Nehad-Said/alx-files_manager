@@ -7,6 +7,6 @@ const server = express();
 
 injectMiddlewares(server);
 injectRoutes(server);
-startServer(server)
+startServer(server);
 
 export default server;
